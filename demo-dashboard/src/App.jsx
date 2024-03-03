@@ -41,7 +41,15 @@ function App() {
       return acc;
   }, {})
 
-  const data = Object.values(formatData)
+
+  // sort date
+  const data = Object.values(formatData).sort((a,b)=>{
+    a = a.date.split('/').reverse().join('');
+    b = b.date.split('/').reverse().join('');
+    return a > b ? 1 : a < b ? -1 : 0 ;   // old first
+    // return a < b ? 1 : a > b ? -1 : 0 ; // new first
+  })
+
 
 
 
@@ -50,13 +58,13 @@ function App() {
       <div style={{padding: '100px'}}>
         <ResponsiveContainer width='100%' height={300}>
         <BarChart data={data}>
-          <CartesianGrid strokeDasharray="4 4" />
+          <CartesianGrid strokeDasharray="3 3" />
           <Legend/>
           <XAxis dataKey='date'/>
           <YAxis  tickFormatter={(value)=> `${value/1000000}M`}/>
+          <Tooltip/>
           <Bar dataKey='totalPrice' fill="#8884d8"/>
           <Bar dataKey='totalPayment' fill="#82ca9d"/>
-          <Tooltip/>
         </BarChart>
       </ResponsiveContainer>
       </div>
